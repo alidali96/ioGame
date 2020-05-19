@@ -1,4 +1,5 @@
 # ioGame
+#### Developed by: [Ali](https://github.com/alidali96), [Fadi](https://github.com/FFindakly) & [Ndriçim](https://github.com/nstrazimiri).
 
 ![Slide](presentation/Slide1.jpg)
 ![Slide](presentation/Slide2.jpg)
