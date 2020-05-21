@@ -46,6 +46,7 @@ public class Pendulum extends Obstacles {
 	}
 
 	// change the name of the function to (swing) instead of animation
+	// REMOVE STATIC
 	public static void swing() {
 
 		currentAngle = currentAngle + angleChange;

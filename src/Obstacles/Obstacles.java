@@ -45,6 +45,7 @@ public abstract class Obstacles extends GameModel {
 			for (Node obstacle : obstacles) {
 
 				if (obstacle instanceof Circle) {
+//					((Pendulum)obstacle).swing();
 					Pendulum.swing();
 				}
 

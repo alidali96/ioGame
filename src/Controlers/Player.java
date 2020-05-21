@@ -2,6 +2,7 @@ package Controlers;
 
 import java.util.ArrayList;
 
+import Blocks.Block;
 import Constants.Constants;
 import Constants.GameSettings;
 import Constants.Sounds;
@@ -15,7 +16,7 @@ public class Player extends GameModel {
 	private boolean isAlive = true;
 	private Point2D velocity = new Point2D(0, 0);
 	private boolean jump;
-	private ArrayList<ImageView> blocks = Level.blocks;
+	private ArrayList<GameModel> blocks = Level.blocks;
 
 	public Player(int x, int y, String url) {
 		super(x, y, url);
@@ -29,16 +30,16 @@ public class Player extends GameModel {
 	public void goHorizontal(int value) {
 		boolean movingRight = value > 0;
 		for (int i = 0; i < Math.abs(value); i++) {
-			for (Node block : blocks) {
+			for (GameModel block : blocks) {
 				if (getBoundsInParent().intersects(block.getBoundsInParent())) {
 					if (movingRight) {
 						if (getTranslateX() + getBoundsInParent().getWidth() == block.getTranslateX()
-								&& getTranslateY() <= block.getTranslateY() + Constants.BLOCK_SIZE - 2) {
+								&& getTranslateY() <= block.getTranslateY() + block.getFitWidth() - 2) {
 							return;
 						}
 					} else {
 						if (getTranslateX() == block.getTranslateX() + block.getBoundsInParent().getWidth()
-								&& getTranslateY() <= block.getTranslateY() + Constants.BLOCK_SIZE - 2) {
+								&& getTranslateY() <= block.getTranslateY() + block.getFitWidth() - 2) {
 							return;
 						}
 					}
@@ -56,10 +57,10 @@ public class Player extends GameModel {
 	public void goVertical(int value) {
 		boolean movingDown = value > 0;
 		for (int i = 0; i < Math.abs(value); i++) {
-			for (Node block : blocks) {
+			for (GameModel block : blocks) {
 				if (getBoundsInParent().intersects(block.getBoundsInParent())
-						&& getTranslateX() - block.getTranslateX() < Constants.PLAYER_SIZE
-						&& getTranslateX() - block.getTranslateX() > -Constants.PLAYER_SIZE) {
+						&& getTranslateX() - block.getTranslateX() < block.getFitWidth()
+						&& getTranslateX() - block.getTranslateX() > -block.getFitWidth()) {
 					if (movingDown) {
 						if (getTranslateY() + getBoundsInParent().getHeight() == block.getTranslateY()) {
 							setTranslateY(getTranslateY() - 1);

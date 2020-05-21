@@ -13,6 +13,7 @@ import Blocks.Block;
 import Blocks.Bridge;
 import Coins.Coin;
 import Constants.Constants;
+import Model.GameModel;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -32,7 +33,7 @@ import Obstacles.Saw;
  * It reads a text file and converts all those characters to game objects
  */
 public class Level extends Pane {
-	public static ArrayList<ImageView> blocks = new ArrayList<ImageView>();
+	public static ArrayList<GameModel> blocks = new ArrayList<GameModel>();
 	public static ArrayList<ImageView> coins = new ArrayList<ImageView>();
 
 
@@ -57,7 +58,7 @@ public class Level extends Pane {
 	public static Saw s;
 
 	Pendulum p;
-	public static Bridge r;
+	Bridge r;
 	public static Gate g;
 	BufferedReader br = null;
 	public static Life life;
@@ -124,9 +125,8 @@ public class Level extends Pane {
 						break;
 					case 'p': 
 						p = new Pendulum(i * Constants.BLOCK_SIZE, nrOfLines * Constants.BLOCK_SIZE);
-						this.getChildren().addAll(p, Pendulum.getUpperBall(), Pendulum.getThread(),
-								Pendulum.getLowerBall());
-						obstacles.add(Pendulum.getLowerBall());
+						this.getChildren().addAll(p, p.getUpperBall(), p.getThread(),								p.getLowerBall());
+						obstacles.add(p.getLowerBall());
 						break;
 					case 'o':
 						playerO = new Player(i * Constants.PLAYER_SIZE, nrOfLines * Constants.PLAYER_SIZE,
@@ -161,10 +161,9 @@ public class Level extends Pane {
 
 					case 'r':
 						r = new Bridge(i * Constants.PLAYER_SIZE, nrOfLines * Constants.PLAYER_SIZE,
-								"Images/bridge.png");
+								"Images/bridge.png", Constants.PLAYER_SIZE * 2);
 						this.getChildren().add(r);
 						blocks.add(r);
-						Bridge.dx=0.03;
 						break;
 					}
 				}
@@ -175,6 +174,19 @@ public class Level extends Pane {
 		}
 		changeBlocksImg();
 		this.getChildren().addAll(topBar);
+	}
+
+	public void updateLevel() {
+		if (!Life.removeL && Level.life != null) {
+			Life.checkLife();
+		}
+		if (Level.key != null) {
+			Key.checkKeys();
+		}
+
+		if (r != null) {
+			r.moveBridge();
+		}
 	}
 
 	// remove objects from the level

@@ -144,16 +144,7 @@ public class Game extends Application {
 		Coin.checkCoins();
 		Obstacles.checkObstacles();
 
-		if (!Life.removeL && Level.life != null) {
-			Life.checkLife();
-		}
-		if (Level.key != null) {
-			Key.checkKeys();
-		}
-
-		if (Level.blocks.contains(Level.r)) {
-			Bridge.moveBridge();
-		}
+		level.updateLevel();
 
 	}
 

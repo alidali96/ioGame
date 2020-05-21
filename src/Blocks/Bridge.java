@@ -12,20 +12,25 @@ import javafx.scene.image.ImageView;
 public class Bridge extends GameModel {
 
 	// variables
-	public static double dx = 0.03;
+	private static double dx = 0.03;
 
 	public Bridge(int x, int y, String url) {
 		super(x, y, url);
 	}
 
+	public Bridge(int x, int y, String url, double width) {
+		super(x, y, url);
+		setFitWidth(width);
+	}
+
 	// create a function to control moving the bridge and check collision
-	public static void moveBridge() {
+	public  void moveBridge() {
 		if (Level.blocks.size() != 0) {
 
 			for (ImageView block : Level.blocks) {
 				if (block instanceof Block) {
-					Level.r.setTranslateX(Level.r.getTranslateX() + dx);
-					if (block.getBoundsInParent().intersects(Level.r.getBoundsInParent())&&block.getTranslateY()==Level.r.getTranslateY()) {
+					setTranslateX(getTranslateX() + dx);
+					if (block.getBoundsInParent().intersects(getBoundsInParent())&&block.getTranslateY()==getTranslateY()) {
 						dx = -dx;
 					}
 
